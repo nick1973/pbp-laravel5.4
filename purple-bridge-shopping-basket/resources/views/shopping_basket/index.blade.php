@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <title>PBP Shopping Basket</title>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -22,7 +23,6 @@
 <div class="container">
     <img src="pbp_header.png">
     {{--Items--}}
-
     <div class="col-lg-4 col-md-4">
         <h3>Your Shopping Basket:</h3>
         <div class="well">
@@ -30,7 +30,8 @@
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label for="exampleInputEmail1">Item</label>
-                    <select name="item" class="form-control">
+                    <select id="item" name="item" class="form-control">
+                        <option>Please Choose</option>
                         <option>Oranges</option>
                         <option>Apples</option>
                         <option>Bananas</option>
@@ -39,23 +40,58 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Price</label>
-                    <input name="price" type="text" class="form-control" placeholder="Price">
+                    <input id="price" name="price" type="text" class="form-control" placeholder="Price">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">How Many</label>
-                    <input name="amount" type="text" class="form-control" placeholder="Quantity">
+                    <input onkeyup="howMany()" id="amount" name="amount" type="text" class="form-control" placeholder="Quantity">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Total</label>
-                    <input id="basket_total" type="text" class="form-control" placeholder="Total">
+                    <input id="total" type="text" class="form-control" placeholder="Total">
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
         </div>
     </div>
 </div>
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script>
+    $("#item").click(function(){
+        var item = $("#item").val()
+         //console.log(item)
+        getPrice(item)
+    })
+
+    function getPrice(item){
+        switch(item) {
+            case 'Please Choose':
+                $("#price").val('')
+                $("#amount").val('')
+                $("#price").val('')
+                $("#total").val('')
+                break;
+            case 'Oranges':
+                $("#price").val(2.99)
+                break;
+            case 'Apples':
+                $("#price").val(0.99)
+                break;
+            case 'Bananas':
+                $("#price").val(1.99)
+                break;
+            case 'Pears':
+                $("#price").val(0.50)
+                break;
+            default:
+                break;
+        }
+    }
+
+    function howMany(){
+        var amount = $("#amount").val()
+        var total = amount * $("#price").val()
+        $("#total").val(total.toFixed(2))
+    }
+</script>
 </body>
 </html>
