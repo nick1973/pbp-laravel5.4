@@ -24,6 +24,9 @@
     <img src="pbp_header.png">
     {{--Items--}}
     <div class="col-lg-4 col-md-4">
+        @foreach ($errors->all() as $error)
+            <div class="bg-danger">{{ $error }}</div>
+        @endforeach
         <h3>Your Shopping Basket:</h3>
         <div class="well">
             <form action="/" method="post">
