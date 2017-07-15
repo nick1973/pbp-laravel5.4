@@ -10,4 +10,8 @@ class ShoppingBasketController extends Controller
         return view('shopping_basket.index');
     }
 
+    public function store(Request $request){
+        return $request->all();
+    }
+
 }
